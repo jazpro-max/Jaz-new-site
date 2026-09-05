@@ -178,7 +178,7 @@ app.get('/api/health', (req, res) => res.json({ success: true, message: 'API is 
 // ROUTES: auth (register, login, forgot/reset/change password, change pin)
 // ---------------------------------------------------------------------------
 
-app.post('/api/auth/register', async (req, res, next) => {
+app.post('/api/register', async (req, res, next) => {
   try {
     const { name, email, phone, password, pin, referralCode } = req.body;
     if (!name || !email || !phone || !password || !pin) {
@@ -206,7 +206,7 @@ app.post('/api/auth/register', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-app.post('/api/auth/login', async (req, res, next) => {
+app.post('/api/login', async (req, res, next) => {
   try {
     const { emailOrPhone, password } = req.body;
     const user = await User.findOne({ $or: [{ email: emailOrPhone?.toLowerCase() }, { phone: emailOrPhone }] }).select('+password');
