@@ -316,23 +316,22 @@ e.preventDefault();
 
 document.getElementById("loading").style.display="block";
 
-const credentials={
-
-email:
-document.getElementById("email").value,
-
-password:
-document.getElementById("password").value,
-
-remember:
-document.getElementById("remember").checked
-
+const credentials = {
+    emailOrPhone: document.getElementById("email").value.trim(),
+    password: document.getElementById("password").value
 };
 
-try{
+try {
 
-const response=await fetch("/api/login",{
+    const response = await fetch("/api/login", {
+        method: "POST",
 
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(credentials)
+    });
 method:"POST",
 
 headers:{
