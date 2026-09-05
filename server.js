@@ -181,7 +181,7 @@ app.get('/api/health', (req, res) => res.json({ success: true, message: 'API is 
 app.post('/api/register', async (req, res, next) => {
   try {
     const { name, email, phone, password, pin, referralCode } = req.body;
-    if (!name || !email || !phone || !password || !pin) {
+    if (!name || !email || !phone || !password) {
       return res.status(400).json({ success: false, message: 'All fields required' });
     }
     if (await User.findOne({ $or: [{ email }, { phone }] })) {
@@ -196,7 +196,7 @@ app.post('/api/register', async (req, res, next) => {
       name, email, phone, password, referredBy,
       referralCode: await genReferralCode(name),
     });
-    await user.setPin(pin);
+  
     await user.save();
     res.status(201).json({
       success: true,
